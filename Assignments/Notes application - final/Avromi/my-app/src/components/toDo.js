@@ -1,49 +1,62 @@
-import dateFormat from "dateformat";
-import ReactModal from 'react-modal';
-import TextInput from './textInput';
-import React, { useState } from "react"
-
-
-
-function ToDo(props){
-  const [currentState, setStateFunc] = useState(false)
-  function handleOpenModal (e) {
-      e.preventDefault()
-    setStateFunc(!currentState)
+{
+  "name": "sarif-service",
+  "version": "1.0.0",
+  "description": "GraphQL API service serving SARIF files",
+  "main": "handler.js",
+  "scripts": {
+    "tsc:no-emit": "tsc --noEmit",
+    "test": "jest",
+    "build": "tsc -p .",
+    "start": "nodemon src/localServer.ts",
+    "zeus:report-service-client": "zeus http://localhost:3003/ --node ./src/generated/report-service-client",
+    "zeus:org-management-client": "zeus http://localhost:4005/ --node ./src/generated/org-management-client",
+    "prettify": "prettier -w ./src ./tests",
+    "eslint": "eslint ./src ./tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:oxsecurity/app/sarif-service.git"
+  },
+  "author": "Yury Imbro",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.6.2",
+    "apollo-server-errors": "^3.3.1",
+    "apollo-server-lambda": "^3.6.2",
+    "aws4": "^1.11.0",
+    "class-validator": "^0.13.2",
+    "git-url-parse": "^16.1.0",
+    "graphql": "^15.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongodb": "^4.1.3",
+    "mongodb-client-encryption": "^1.2.7",
+    "node-fetch": "^2.6.7",
+    "node-sarif-builder": "^2.0.2",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "zlib": "^1.0.5",
+    "gitlab": "^14.2.2"
+  },
+  "devDependencies": {
+    "@types/git-url-parse": "^9.0.1",
+    "@types/jest": "^27.4.0",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/lodash": "^4.14.178",
+    "@types/node": "^17.0.21",
+    "@types/node-fetch": "^2.6.1",
+    "@types/sarif": "^2.1.4",
+    "@types/ws": "^8.5.2",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "dotenv": "^10.0.0",
+    "eslint": "^8.11.0",
+    "graphql-zeus": "^4.0.4",
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
   }
-function handleCloseModal (e) {
-  
-    setStateFunc(!currentState)
-  }
-
-return <div style={{  //YS: Format your code! 
-    padding: 18,
-    width:'150px',
-    border: '1px solid white',
-    display: 'grid',
-    rowGap: 12,
-    color: 'white'
-    
-
- }}>
-   
-     
-
-  <h3> {props.title}</h3>
-    {props.todo}
-  <p style={{fontSize:'12px'}}>{dateFormat(props.time).toLocaleString()}</p>
-  <button onClick={()=>props.deleteNote(props.index)}>Delete </button>
-  <button onClick={handleOpenModal}  >Edit Note </button> 
-        <ReactModal
-           isOpen={currentState}
-           contentLabel="Minimal Modal Example">
-               <div>
-                    <button onClick={handleCloseModal}>Close Modal</button>
-                    <TextInput/>
-                </div>
-        </ReactModal>
-</div>;
 }
-// ()=>props.editNote(props.index)
-
-export default ToDo
